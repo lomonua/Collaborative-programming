@@ -1,0 +1,43 @@
+import random
+
+def trigger_random_event(probability_positive, event_list, restaurant_state):
+    """
+    Allie Kang
+    
+    Triggers a random event (positive or negative) based on provided probability
+    and applies its effect to the restaurant "state". It will also return the 
+    name and effect of the triggered event.
+    
+    Parameters:
+    - probability_positive (float): value between 0 and 1; chance of a 
+    positive event.
+    - event_list (dict): contains 'positive' and 'negative' keys correlating 
+    to lists of possible events.
+                        Each event is a dict with keys: 'name', 'effect'.
+    - restaurant_state (dict): current state of the restaurant with keys 
+    like 'reputation', 'sales', etc.
+    
+    Returns:
+    - dict with keys: 'event_name' and 'applied_changes'
+    """
+    
+    if not (0 <= probability_positive <= 1):
+        raise ValueError("probability_positive must be between 0 and 1.")
+    
+    event_type = 'pos.' if random.random() <= probability_positive else 'neg.'
+
+    if not event_list[event_type]:
+        raise ValueError(f"No events available for type: {event_type}")
+    
+    event = random.choice(event_list[event_type])
+    
+    applied_changes = {}
+    for key, change in event['effect'].items():
+        if key in restaurant_state:
+            restaurant_state[key] += change
+            applied_changes[key] = change
+    
+    return {
+        'event_name': event['name'],
+        'applied_changes': applied_changes
+    }
