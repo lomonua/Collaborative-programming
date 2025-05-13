@@ -1,9 +1,29 @@
 import random
-
-# === Existing Functions (Unchanged) ===
+import json
 
 def evaluate_menu_price(price, base_cost, customer_sensitivity=1.5):
+    """
+    Made by Lawrence
+    Evaluates if the given menu price is profitable and how it affects customer satisfaction.
+    
+    Parameters:
+    - price (float): The price the player wants to charge for the menu item.
+    - base_cost (float): The cost to produce one unit of the item.
+    - customer_sensitivity (float): Higher means customers are more price-sensitive.
+    
+    Returns:
+    - dict: A summary containing:
+        - 'price_charged': Rounded menu price.
+        - 'estimated_customers': Number of customers expected.
+        - 'total_profit': Profit after costs.
+        - 'status': Business outcome ("Profiting", "Breaking Even", or "Losing Money").
+        - 'customer_satisfaction': Satisfaction level ("High", "Moderate", or "Low").
+    """
     def estimate_customers(price):
+        """
+        example function to simulate customer turnout.
+        The higher the price, the fewer the customers (in a non-linear way).
+        """
         base_customers = 100
         estimated = int(base_customers * (base_cost / price) ** customer_sensitivity)
         return max(0, estimated)
@@ -13,19 +33,12 @@ def evaluate_menu_price(price, base_cost, customer_sensitivity=1.5):
     cost = base_cost * estimated_customers
     profit = revenue - cost
 
-    if profit > 0:
-        status = "Profiting"
-    elif profit == 0:
-        status = "Breaking Even"
-    else:
-        status = "Losing Money"
+    status =( "Profiting" if profit > 0 else "Breaking Even" if  profit == 0
+             else "Losing Money")
 
-    if estimated_customers >= 75:
-        satisfaction = "High"
-    elif estimated_customers >= 40:
-        satisfaction = "Moderate"
-    else:
-        satisfaction = "Low"
+    satisfaction = ("High" if estimated_customers >= 75 else "Moderate" if
+    estimated_customers >= 40 else "Low")
+
 
     return {
         "price_charged": round(price, 2),
@@ -34,6 +47,9 @@ def evaluate_menu_price(price, base_cost, customer_sensitivity=1.5):
         "status": status,
         "customer_satisfaction": satisfaction
     }
+    with open("menu_report.json", "w") as file:
+        json_string = json.dumps(result, indent=4) 
+        file.write(json_string)
 
 def calculate_satisfaction(staff_efficiency, cleanliness, wait_time):
     normalized_wait = max(0, 100 - (wait_time * (100 / 30)))
@@ -146,6 +162,45 @@ def validate_wages(proposed_wages, min_wages):
                 'status': 'Approved'
             }
     return results
+def manage_inventory(inventory, estimated_customers, portion_size=1):
+    """
+    Made by Lawrence
+    Updates inventory based on customer demand and spoilage. Uses a comprehension.
+
+    Parameters:
+    - inventory (dict): Ingredients and their quantities.
+    - estimated_customers (int): Number of customers that day.
+    - portion_size (int): Amount of each ingredient used per customer.
+
+    Returns:
+    - dict: Updated inventory after usage and spoilage.
+    """
+    spoilage_rate = 0.05
+
+    updated_inventory = {
+        item: max(0, quantity - (estimated_customers * portion_size) - int(quantity * spoilage_rate))
+        for item, quantity in inventory.items()
+    }
+
+    return updated_inventory
+# === Game Setup ===
+
+restaurant_state = {
+    'reputation': 50,
+    'sales': 10000
+}
+
+event_list = {
+    'pos.': [{'name': 'Great Online Review', 'effect': {'reputation': 10}}],
+    'neg.': [{'name': 'Customer Illness Report', 'effect': {'reputation': -15}}]
+}
+
+min_wages = {
+    'Chef': 13.5,
+    'Waiter': 12.0,
+    'Dishwasher': 9.0
+}
+
 
 # === Game Setup ===
 
