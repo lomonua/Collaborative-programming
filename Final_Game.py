@@ -60,6 +60,33 @@ def trigger_random_event(probability_positive, event_list, restaurant_state):
         'event_name': event['name'],
         'applied_changes': applied_changes
     }
+    
+def chain_reaction(event_name, event_list, restaurant_state):
+    chain_events = {
+        "Viral Social Media Post": "Increased Crowds",
+        "Food Critic Review": "Blog Feature",
+        "Customer Illness Report": "Health Inspection"
+    }
+
+    if event_name in chain_events:
+        next_event_name = chain_events[event_name]
+        for event_type in ['pos.', 'neg.']:
+            for event in event_list[event_type]:
+                if event['name'] == next_event_name:
+                    applied_changes = {}
+                    for key, change in event['effect'].items():
+                        if key in restaurant_state:
+                            restaurant_state[key] += change
+                            applied_changes[key] = change
+                    return {
+                        'event_name': event['name'],
+                        'applied_changes': applied_changes
+                    }
+    
+    return {
+        'event_name': "No Chain Reaction",
+        'applied_changes': {}
+    }
 
 def validate_wages(proposed_wages, min_wages):
     results = {}
@@ -91,8 +118,17 @@ restaurant_state = {
 }
 
 event_list = {
-    'pos.': [{'name': 'Great Online Review', 'effect': {'reputation': 10}}],
-    'neg.': [{'name': 'Customer Illness Report', 'effect': {'reputation': -15}}]
+    'pos.': [
+        {'name': 'Great Online Review', 'effect': {'reputation': 10}},
+        {'name': 'Viral Social Media Post', 'effect': {'reputation': 15}},
+        {'name': 'Blog Feature', 'effect': {'sales': 3000}}
+    ],
+    'neg.': [
+        {'name': 'Customer Illness', 'effect': {'reputation': -15}},
+        {'name': 'Health Inspection', 
+            'effect': {'reputation': -10, 'sales': -2000}},
+        {'name': 'Increased Crowds', 'effect': {'reputation': -5, 'sales': 1000}}
+    ]
 }
 
 min_wages = {
@@ -154,7 +190,17 @@ def main_game():
 
         print("Current Reputation:", restaurant_state['reputation'])
         print("Current Sales: $", restaurant_state['sales'])
+        
+        # Chain Reaction
+        chain_result = chain_reaction(event_result['event_name'], event_list, restaurant_state)
+        if chain_result['event_name'] != "No Chain Reaction":
+            print(f"Chain Reaction Event: {chain_result['event_name']}")
+            for k, v in chain_result['applied_changes'].items():
+                print(f"  {k} changed by {v}")
+            print("Updated Reputation:", restaurant_state['reputation'])
+            print("Updated Sales: $", restaurant_state['sales'])
 
+        
         # Continue?
         cont = input("\nNext day? (y/n): ").strip().lower()
         if cont != 'y':
