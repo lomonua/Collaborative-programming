@@ -41,6 +41,26 @@ def calculate_satisfaction(staff_efficiency, cleanliness, wait_time):
     return round(score, 2)
 
 def trigger_random_event(probability_positive, event_list, restaurant_state):
+    """
+    Allie Kang
+    Technique Demonstrated - Optional parameters and/or keyword arguments
+    
+    Triggers a random event (positive or negative) based on provided probability
+    and applies its effect to the restaurant "state". It will also return the 
+    name and effect of the triggered event.
+    
+    Parameters:
+    - probability_positive (float): value between 0 and 1; chance of a 
+    positive event.
+    - event_list (dict): contains 'positive' and 'negative' keys correlating 
+    to lists of possible events.
+                        Each event is a dict with keys: 'name', 'effect'.
+    - restaurant_state (dict): current state of the restaurant with keys 
+    like 'reputation', 'sales', etc.
+    
+    Returns:
+    - dict with keys: 'event_name' and 'applied_changes'
+    """
     if not (0 <= probability_positive <= 1):
         raise ValueError("probability_positive must be between 0 and 1.")
     
@@ -61,7 +81,24 @@ def trigger_random_event(probability_positive, event_list, restaurant_state):
         'applied_changes': applied_changes
     }
     
+
 def chain_reaction(event_name, event_list, restaurant_state):
+    """
+    Allie Kang
+    Technique Demonstrated - Sequence unpacking
+    
+    Triggers a follow-up event based on the name of the initial random event
+    that was triggered. Only certain events can lead to chain reactions.
+    
+    Parameters:
+    - event_name (str): the name of the original event.
+    - event_list (dict): contains all events.
+    - restaurant_state (dict): current state of the restaurant.
+    
+    Returns:
+    - dict with keys: 'event_name' and 'applied_changes' (or empty if no chain
+    reaction)
+    """
     chain_events = {
         "Viral Social Media Post": "Increased Crowds",
         "Food Critic Review": "Blog Feature",
