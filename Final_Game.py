@@ -6,7 +6,7 @@ def evaluate_menu_price(price, base_cost, customer_sensitivity=1.5):
     """
     Made by Lawrence
     Evaluates if the given menu price is profitable and how it affects customer satisfaction.
-    
+    Technique demonstrated: Conditional expressions (tenary operator)
     Parameters:
     - price (float): The price the player wants to charge for the menu item.
     - base_cost (float): The cost to produce one unit of the item.
@@ -48,9 +48,6 @@ def evaluate_menu_price(price, base_cost, customer_sensitivity=1.5):
         "status": status,
         "customer_satisfaction": satisfaction
     }
-    with open("menu_report.json", "w") as file:
-        json_string = json.dumps(result, indent=4) 
-        file.write(json_string)
 
 def calculate_satisfaction(staff_efficiency, cleanliness, wait_time):
     """
@@ -200,7 +197,8 @@ def validate_wages(proposed_wages, min_wages):
 def manage_inventory(inventory, estimated_customers, portion_size=1):
     """
     Made by Lawrence
-    Updates inventory based on customer demand and spoilage. Uses a comprehension.
+    Updates inventory based on customer demand and spoilage.
+    Technique demonstrated: Comprehension
 
     Parameters:
     - inventory (dict): Ingredients and their quantities.
