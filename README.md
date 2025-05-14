@@ -35,13 +35,11 @@ Optional Configuration (in code):
 - base_cost: The food production cost per item (default is 5).
 - min_wages: A dictionary setting legal minimum wages for staff.
 
-Educational Techniques Demonstrated -----------------------------------
-- Dictionary Comprehensions
-- Optional Parameters
-- Sequence Unpacking and Conditionals
-- Input Validation
-- Set Operations
-- etc.
+Method/Function
+Allie Kang (trigger_random_event, chain_reaction): Optional parameters and/or keyword arguments, Sequence unpacking
+Jennifer Carrera(validate_wages, load_wage_rules, get_unmatched_roles): f-strings containing expressions, use of json.load()
+Lawrence Omonua (evaluate_menu_price, manage_inventory): Conditional expression (tenary operator), comprehension 
+Abel Degnet (simulate_day, calculate_satisfaction): Use of json.dumps(), generator expressions
 
 End of Game
 -----------
