@@ -334,6 +334,13 @@ def main_game():
     day = 1
     total_profit = 0
 
+    # Inventory initialization
+    inventory = {
+        'meat': 300,
+        'vegetables': 200,
+        'rice': 150
+    }
+
     print("Welcome to Restaurant Tycoon!\n")
 
     while True:
@@ -353,6 +360,10 @@ def main_game():
         print("-> Menu Profit:", menu_result["total_profit"])
         print("-> Customer Satisfaction (from price):", menu_result["customer_satisfaction"])
         total_profit += menu_result["total_profit"]
+
+        # Inventory Update
+        inventory = manage_inventory(inventory, menu_result["estimated_customers"])
+        print("-> Inventory after service:", inventory)
 
         # Satisfaction Score
         satisfaction_score = calculate_satisfaction(staff_eff, cleanliness, wait_time)
@@ -380,7 +391,7 @@ def main_game():
 
         print("Current Reputation:", restaurant_state['reputation'])
         print("Current Sales: $", restaurant_state['sales'])
-        
+
         # Chain Reaction
         chain_result = chain_reaction(event_result['event_name'], event_list, restaurant_state)
         if chain_result['event_name'] != "No Chain Reaction":
@@ -389,7 +400,7 @@ def main_game():
                 print(f"  {k} changed by {v}")
             print("Updated Reputation:", restaurant_state['reputation'])
             print("Updated Sales: $", restaurant_state['sales'])
-        
+
         # Revenue Simulation
         print("\n--- Revenue Simulation ---")
         daily_report = simulate_day()
@@ -398,8 +409,6 @@ def main_game():
         print(f"  Total Expenses: ${daily_report['total_expenses']}")
         print(f"  Daily Profit: ${daily_report['daily_profit']}")
 
-
-        
         # Continue?
         cont = input("\nNext day? (y/n): ").strip().lower()
         if cont != 'y':
