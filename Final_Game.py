@@ -1,5 +1,7 @@
 import random
 import json
+from revenue_simulation import simulate_day
+
 
 def evaluate_menu_price(price, base_cost, customer_sensitivity=1.5):
     """
@@ -291,6 +293,15 @@ def main_game():
                 print(f"  {k} changed by {v}")
             print("Updated Reputation:", restaurant_state['reputation'])
             print("Updated Sales: $", restaurant_state['sales'])
+        
+        # Revenue Simulation
+        print("\n--- Revenue Simulation ---")
+        daily_report = simulate_day()
+        print(f"  Event: {daily_report['event']}")
+        print(f"  Total Income: ${daily_report['total_income']}")
+        print(f"  Total Expenses: ${daily_report['total_expenses']}")
+        print(f"  Daily Profit: ${daily_report['daily_profit']}")
+
 
         
         # Continue?
