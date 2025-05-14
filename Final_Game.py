@@ -54,6 +54,8 @@ def evaluate_menu_price(price, base_cost, customer_sensitivity=1.5):
 
 def calculate_satisfaction(staff_efficiency, cleanliness, wait_time):
     """
+    Abel Degnet 
+    Technique Demonstrated – Weighted scoring with conditional modifiers
     Calculates a weighted satisfaction score based on multiple dynamic factors.
 
     Technique Demonstrated – Weighted scoring with conditional modifiers
