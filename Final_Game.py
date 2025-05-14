@@ -18,7 +18,6 @@ def load_wage_rules(file_path):
 
     Raises:
         FileNotFoundError: If the file at file_path does not exist.
-        json.JSONDecodeError: If the file contains invalid JSON.
 
     Side effects:
         Opens and reads the specified file.
@@ -63,7 +62,6 @@ def validate_wages(proposed_wages, min_wages):
                 'status': 'Approved'
             }
     return results
-
 
 def get_unmatched_roles(proposed_wages, min_wages):
     """
