@@ -35,7 +35,29 @@ Optional Configuration (in code):
 - base_cost: The food production cost per item (default is 5).
 - min_wages: A dictionary setting legal minimum wages for staff.
 
-Method/Function
+|   Method/Function   |   Primary author  |   Techniques demonstrated  |
+|---------------------|-------------------|----------------------------|
+| trigger_random_event| Allie Kang        | Optional parameters/args   |
+|---------------------|-------------------|----------------------------|
+| chain_reaction      | Allie Kang        | Sequence unpacking         |
+|---------------------|-------------------|----------------------------|
+| validate_wages      | Jennifer Carrera  | f-strings containing       |
+|                                         | expressions                |
+|---------------------|-------------------|----------------------------|
+|load_wage_rules      | Jennifer Carrera  | Use of json.load()         |
+|---------------------|-------------------|----------------------------|
+|get_unmatched_roles  | Jennifer Carrera  | Set operations             |
+|---------------------|-------------------|----------------------------|
+|evaluate_menu_price  | Lawrence Omonua   | Conditional expression     |
+|---------------------|-------------------|----------------------------|
+|manage_inventory     | Lawrence Omonua   | Comprehension              | 
+|---------------------|-------------------|----------------------------|
+|simulate_day         | Abel Degnet       |Use of json.dumps()         |
+|---------------------|-------------------|----------------------------|
+|calculate_satisfaction| Abel Degnet      |Generator expressions       |
+|---------------------|-------------------|----------------------------|
+
+
 Allie Kang (trigger_random_event, chain_reaction): Optional parameters and/or keyword arguments, Sequence unpacking
 Jennifer Carrera(validate_wages, load_wage_rules, get_unmatched_roles): f-strings containing expressions, use of json.load()
 Lawrence Omonua (evaluate_menu_price, manage_inventory): Conditional expression (tenary operator), comprehension 
