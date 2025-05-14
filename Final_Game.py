@@ -55,7 +55,8 @@ def evaluate_menu_price(price, base_cost, customer_sensitivity=1.5):
 def calculate_satisfaction(staff_efficiency, cleanliness, wait_time):
     """
     Abel Degnet 
-    Technique Demonstrated – Weighted scoring with conditional modifiers
+    Technique Demonstrated – Conditional expression (via max function 
+    for normalization)
     Calculates a weighted satisfaction score based on multiple dynamic factors.
 
     Technique Demonstrated – Weighted scoring with conditional modifiers
@@ -220,7 +221,7 @@ def manage_inventory(inventory, estimated_customers, portion_size=1):
 """
 Abel Degnet
 Revenue Algorithm Simulation
-Technique Demonstrated – Randomized simulation with dictionaries and conditional logic
+Technique Demonstrated – Use of json.dumps() to format structured output
 
 This code will help in understanding the impact of different factors on the 
 restaurant's revenue and can be used to make informed decisions about pricing, 
