@@ -53,9 +53,40 @@ def evaluate_menu_price(price, base_cost, customer_sensitivity=1.5):
         file.write(json_string)
 
 def calculate_satisfaction(staff_efficiency, cleanliness, wait_time):
+    """
+    Calculates a weighted satisfaction score based on multiple dynamic factors.
+
+    Technique Demonstrated – Weighted scoring with conditional modifiers
+    """
+
+    # Normalize wait time to a 0–100 scale, lower wait is better
     normalized_wait = max(0, 100 - (wait_time * (100 / 30)))
-    score = (staff_efficiency * 0.4) + (cleanliness * 0.3) + (normalized_wait * 0.3)
+
+    # Adjust weights based on thresholds
+    efficiency_weight = 0.4
+    cleanliness_weight = 0.3
+    wait_weight = 0.3
+
+    # Add penalty for long wait times
+    if wait_time > 25:
+        wait_weight += 0.1
+        efficiency_weight -= 0.05
+        cleanliness_weight -= 0.05
+
+    # Add bonus if staff and cleanliness are very high
+    bonus = 0
+    if staff_efficiency > 90 and cleanliness > 90:
+        bonus = 5
+
+    score = (
+        (staff_efficiency * efficiency_weight) +
+        (cleanliness * cleanliness_weight) +
+        (normalized_wait * wait_weight) +
+        bonus
+    )
+
     return round(score, 2)
+
 
 def trigger_random_event(probability_positive, event_list, restaurant_state):
     """
