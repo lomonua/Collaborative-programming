@@ -49,43 +49,36 @@ def evaluate_menu_price(price, base_cost, customer_sensitivity=1.5):
         "customer_satisfaction": satisfaction
     }
 
+"""
+Abel Degnet  
+Technique Demonstrated – Generator expression used within a weighted scoring system
+
+This function calculates an overall customer satisfaction score based on
+staff efficiency, cleanliness, and average wait time. It normalizes the wait
+time to a 0–100 scale (lower wait = better) and uses a generator expression
+to apply dynamic weights to each metric.
+"""
+
 def calculate_satisfaction(staff_efficiency, cleanliness, wait_time):
-    """
-    Abel Degnet 
-    Technique Demonstrated – Conditional expression (via max function 
-    for normalization)
-    Calculates a weighted satisfaction score based on multiple dynamic factors.
+    # Define weights for each factor
+    metric_weights = {
+        'staff_efficiency': 0.4,
+        'cleanliness': 0.3,
+        'wait_time': 0.3
+    }
 
-    Technique Demonstrated – Weighted scoring with conditional modifiers
-    """
+    # Normalize wait time: lower wait increases satisfaction
+    metrics = {
+        'staff_efficiency': staff_efficiency,
+        'cleanliness': cleanliness,
+        'wait_time': max(0, 100 - (wait_time * (100 / 30)))
+    }
 
-    # Normalize wait time to a 0–100 scale, lower wait is better
-    normalized_wait = max(0, 100 - (wait_time * (100 / 30)))
-
-    # Adjust weights based on thresholds
-    efficiency_weight = 0.4
-    cleanliness_weight = 0.3
-    wait_weight = 0.3
-
-    # Add penalty for long wait times
-    if wait_time > 25:
-        wait_weight += 0.1
-        efficiency_weight -= 0.05
-        cleanliness_weight -= 0.05
-
-    # Add bonus if staff and cleanliness are very high
-    bonus = 0
-    if staff_efficiency > 90 and cleanliness > 90:
-        bonus = 5
-
-    score = (
-        (staff_efficiency * efficiency_weight) +
-        (cleanliness * cleanliness_weight) +
-        (normalized_wait * wait_weight) +
-        bonus
-    )
+    # Use generator expression to apply weights
+    score = sum(metric_weights[key] * metrics[key] for key in metrics)
 
     return round(score, 2)
+
 
 
 def trigger_random_event(probability_positive, event_list, restaurant_state):
